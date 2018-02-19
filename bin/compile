@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+echo "------> Installing elasticsearch 5.5"
+BUILD_DIR=$1
+BUILD_PATH=$(cd $1 && pwd)
+PROFILE=${BUILD_PATH}/.profile.d
+
+cd $BUILD_DIR
+# download the elasticsearch tar file
+echo "------> Downloading tarball"
+wget https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/5.6.4/elasticsearch-5.6.4.tar.gz -O elasticsearch.tar.gz
+mkdir -p $BUILD_DIR/.heroku/vendor/elasticsearch
+mkdir $BUILD_DIR/.heroku/vendor/elasticsearch/logs
+# untar the binary to a directory inside /app/.heroku
+tar -C $BUILD_DIR/.heroku/vendor/elasticsearch -xvf elasticsearch.tar.gz
+rm -f elasticsearch.tar.gz
+
+# plugin install
+
