@@ -7,12 +7,13 @@ PROFILE=${BUILD_PATH}/.profile.d
 cd $BUILD_DIR
 # download the elasticsearch tar file
 echo "------> Downloading tarball"
-wget https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/5.6.4/elasticsearch-5.6.4.tar.gz -O elasticsearch.tar.gz
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.5.tar.gz -O elasticsearch.tar.gz
 mkdir -p $BUILD_DIR/.heroku/vendor/elasticsearch
 mkdir $BUILD_DIR/.heroku/vendor/elasticsearch/logs
-# untar the binary to a directory inside /app/.heroku
-tar -C $BUILD_DIR/.heroku/vendor/elasticsearch -xvf elasticsearch.tar.gz
+tar -xvf elasticsearch.tar.gz
+mv elasticsearch $BUILD_DIR/.heroku/vendor/elasticsearch
 rm -f elasticsearch.tar.gz
 
 # plugin install
-
+$BUILD_DIR/.heroku/vendor/elasticsearch/bin/elasticsearch-plugin install analysis-kuromoji
+$BUILD_DIR/.heroku/vendor/elasticsearch/bin/elasticsearch-plugin install analysis-icu
